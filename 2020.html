@@ -38,11 +38,12 @@
 		overflow: hidden;
 		border: 5px solid rgba(256,256,256,1);
 		margin: 18px auto 0px;
-		position: relative;				
+		position: relative;	
+
 	}			
 	#box{
 		width: 2600px;
-		height: 600px;
+		height: 580px;
 	}
 
 	#div_logo{
@@ -83,10 +84,28 @@
     	z-index: 100;	
 	}
 
+	#colorful_clock{
+		width:60px;
+		height:40px;
+		line-height:40px;
+		position: absolute;
+		text-align: center;
+    	top:200px;
+    	left:55px; 
+    	z-index: 100;	
+    	font-size:14px;    
+    	font-weight: 800;	
+
+	}
+
+	#colorful_clock a,#colorful_clock a:visited{
+        color:rgb(38,148,247);
+    }
+
 	#div_todaytime{
 		width:80px;
 		position: absolute;
-    	top:524px;
+    	top:474px;
     	left:55px; 
     	z-index: 100;
     	font-size:12px;
@@ -100,24 +119,7 @@
     	animation: circle 2s ease infinite;
 
 	}	
-
-	#colorful_clock{
-		width:60px;
-		height:40px;
-		line-height:40px;
-		position: absolute;
-		text-align: center;
-    	top:474px;
-    	left:55px; 
-    	z-index: 100;	
-    	font-size:14px;    
-    	font-weight: 800;	
-
-	}
-
-	#colorful_clock a,#colorful_clock a:visited{
-        color:rgb(38,148,247);
-    }
+	
 
 	@keyframes circle{
          25%{
@@ -181,10 +183,10 @@
     }	
 	 #div_month{
     	width:100%;
-    	height:40px;
+    	height:30px;
     	/*background: gray;*/
     	position: fixed;
-    	bottom:0px;
+    	bottom:8px;
     	left:0px;
     	text-align: center;
     	z-index: 90;
@@ -199,9 +201,22 @@
 		left: 62%;
 		transform: translateX(-50%);
 	}
-	.qh button,#div_month button{
-	    width: 110px;
+	.qh button{
+        width: 110px;
         height:30px;
+	    line-height: 30px;
+	    font-size: 16px;
+	    border-radius: 8px;
+	    outline: none;
+	    border:none;
+	    cursor: pointer;
+
+	}
+
+	#div_month button{
+	    width: 7%;
+        height:30px;
+        margin-right: 10px;
 	    line-height: 30px;
 	    font-size: 16px;
 	    border-radius: 8px;
@@ -297,7 +312,7 @@
 <script src="__js__/echartsplugin/echarts.min.js"></script>
 <script src="__js__/jquery-1.5.2.min.js"></script>
 <script src="__js__/publicdatajs/publicnews.js"></script>
- <script src="https://www.runoob.com/static/js/wonderland.js"></script>
+<script src="https://www.runoob.com/static/js/wonderland.js"></script>
 
 </head>
 <body>
@@ -330,10 +345,10 @@
     </div>
 
     <!-- 显示今日时间 -->
-     <div id="div_todaytime">
+    <!--  <div id="div_todaytime">
          <p style="font-size:16px;color:black;font-weight: 900;">今日</p>
          <p id="today" style="font-weight: 600;"></p>         
-    </div>
+    </div> -->
 
    
 	<!--给图表准备一个容器-->
@@ -376,8 +391,21 @@
 
         	  //月份样式重置
         	  // var winWidth = window.screen.availWidth;
+        	  // console.log(winWidth);
         	  // $("#div_month").width(winWidth);
-        	  // $("#div_month .btn").width(Math.floor(winWidth/13)).css({boxSizing:"border-box"});             
+        	  // $("#div_month .btn").width(Math.ceil(winWidth/13)).css({boxSizing:"border-box"});  
+        	   
+        	  var winHeight = window.screen.availHeight;
+        	  if(winHeight>728){
+                   console.log("大于728");
+                   var h=650;
+                   $("#box").height(h);
+        	  }else{
+        	  	   var h1=550;
+                   $("#box").height(h1);
+        	  }
+        	  
+         
 
 
         })
@@ -684,10 +712,9 @@
         // 判断当年是不是闰年函数，闰年返回29年 不是返回28天
 		function getDaysOf2(year){
             return (year % 400 == 0 || (year %100 != 0 && year % 4 == 0)) ? 29 : 28;
-        }	
-
+        }
             
-		    
+		
 </script>
 		
 		
