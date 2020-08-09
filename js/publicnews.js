@@ -91,15 +91,45 @@ function gettimeAccordingByDay(year,monthday){
 // 	 return monthsArr;			 	
 // }
 
+function getcurrentMonthDate(){
+     var date = new Date();
+     var m=date .getMonth() + 1;
+     var d=date .getDate();
+     return m+"."+d;
+}
+
+
+function arrSplit(arr){
+	let splitArr=arr.split("(");
+	return splitArr[0];
+}
 
 //不同月份的横轴坐标,显示月日+周几 , 从gettimeAccordingByDay(year,monthday)取值
 function monthArr(len,Month,XdataColor,XdataFontsize){ 
 	 var monthsArr=new Array();
 	 for(let i=1;i<=len;i++){  
-	 	  let obj={
-	 	  	 value:gettimeAccordingByDay(2020,Month+"."+i),
-	 	  	 textStyle:{color:XdataColor,fontSize:XdataFontsize,fontWeight:'bold'}
-	      };
+	 	  // let obj={	
+	 	  // 	 value:gettimeAccordingByDay(2020,Month+"."+i),
+	 	  // 	 textStyle:{color:XdataColor,fontSize:XdataFontsize,fontWeight:'bold'}
+ 	  	 
+	     // };
+	     
+	      let obj;
+	      if(getcurrentMonthDate()==arrSplit(gettimeAccordingByDay(2020,Month+"."+i))){
+		      	  obj={	
+			 	  	 value:gettimeAccordingByDay(2020,Month+"."+i),
+			 	  	 textStyle:{color:"red",fontSize:XdataFontsize,fontWeight:'bold'}
+	 	  	 
+		         };
+
+	      }else{
+		      	 obj={
+		      	 	value:gettimeAccordingByDay(2020,Month+"."+i),
+			 	    textStyle:{color:XdataColor,fontSize:XdataFontsize,fontWeight:'bold'}
+		      	 }
+	      	 
+	      }
+
        
 	 	  monthsArr.push(obj);
 	 }
@@ -283,7 +313,7 @@ function diffMonth(style,len,month,d1,d2,d3){
 			left: "200px",
 			//right: "200px",
 			top: "90px",
-	        bottom: "30px"
+	        bottom: "60px"
 	    },
 	    dataZoom: [
             {   // 这个dataZoom组件，默认控制x轴。
@@ -621,6 +651,6 @@ function diffMonth(style,len,month,d1,d2,d3){
 		}
 	}
 
-
+	
 	
 }   
