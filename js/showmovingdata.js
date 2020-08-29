@@ -1,6 +1,4 @@
 
-
-
 var vue=new Vue({
       el:"#app",
       data:{
@@ -206,51 +204,198 @@ var vue=new Vue({
                           myChart.setOption(options);                       
                        
                  }else{
-                       //用ajax请求数据
-                       $.ajax({
-                                url:"/apply/readData",
-                                dataType:'JSON',
-                                type:'post',
-                                async:true,
-                                success:function(result){
-                                     this.everydays=(JSON.parse(result)).everydaynumbers;
-                                     let m5=this.everydays[4].five.d3.slice(13);
-                                     let m6=this.everydays[5].six.d3;
-                                     let m7=this.everydays[6].seven.d3;
-                                     let m8=this.everydays[7].eight.d3;
-                                     let m9=this.everydays[8].nine.d3;
-                                     let m10=this.everydays[9].ten.d3;
-                                     let m11=this.everydays[10].eleven.d3;
-                                     let m12=this.everydays[11].twelve.d3;
-                                     this.alldata = m5.concat(m6,m7,m8,m9,m10,m11,m12);  
+                      var self = this;
+                      // axios 用jquery的$.parseJSON()方法转化成json对象 JSON.parse()方法不能用
+                      // axios.post('/apply/readData',{},{emulateJSON:true}).then(function(result){
+                      //      self.everydays=$.parseJSON(result.data).everydaynumbers;
+                      //                let m5=self.everydays[4].five.d3.slice(13);
+                      //                let m6=self.everydays[5].six.d3;
+                      //                let m7=self.everydays[6].seven.d3;
+                      //                let m8=self.everydays[7].eight.d3;
+                      //                let m9=self.everydays[8].nine.d3;
+                      //                let m10=self.everydays[9].ten.d3;
+                      //                let m11=self.everydays[10].eleven.d3;
+                      //                let m12=self.everydays[11].twelve.d3;
+                      //                self.alldata = m5.concat(m6,m7,m8,m9,m10,m11,m12);  
+                      //                // 用对象类型将请求到的数据写入本地存储中                           
+                      //                let storageData={
+                      //                     arrLen:Math.floor(self.alldata.length / shownumber),
+                      //                     showData:self.alldata
+                      //                }
+                      //                sessionStorage.setItem("sessionstorageshowdata",JSON.stringify(storageData));
+                      //                //const storageDatas=JSON.parse(sessionStorage.getItem('sessionstorageshowdata'));
+                 
+                      //                //计算当前完成任务数以及百分比
+                      //                self.currentTotal = sumArr(self.alldata);
+                      //                self.percentage = GetPercent(self.currentTotal, self.total);
+                                     
+                      //                //创建新数组用于装显示的数据段
+                      //                const mockData=new Array();                   
+                      //                for(let i = 0,len = self.alldata.length;i<len;i += self.xAxisShowNumber){
+                      //                    //mockData.push(Math.floor(Math.random()*100)+200);
+                      //                     mockData.push(self.alldata.slice(i,i+self.xAxisShowNumber));
+                      //                }  
+
+                      //                // 获得数据段对应的时间轴
+                      //                let XaxisData=new Array();
+                      //                const alldownyeardata=self.alldownyeartime;
+                      //                let num=self.alldata.length;
+                      //                //console.log("来自数据库条数："+num);
+                      //                XaxisData=alldownyeardata.slice(0,num); 
+                      //                let everyweekdata=new Array();  
+                      //                for(let i = 0,len = XaxisData.length;i<len;i += self.xAxisShowNumber){
+                      //                     everyweekdata.push(XaxisData.slice(i,i+self.xAxisShowNumber));
+                      //                }     
+
+                                    
+                      //                // 首次请求成功后，将显示数据组的长度写入cookie中
+                      //                // nowDate = new Date();
+                      //                // nowDate.setTime(nowDate.getTime() + (24 * 60 * 60 * 1000));     //1天过期
+                      //                // $.cookie("showmovingdataslen", mockData.length, {
+                      //                //      path: '/',                //cookie的作用域
+                      //                //      expires: nowDate
+                      //                // });
+
+                      //                const box=document.getElementById("box");
+                      //                const myChart=echarts.init(box,self.customStyle);
+                      //                const options={
+                      //                       title:{
+                      //                             text:self.bigTit,
+                      //                             left:'center',
+                      //                             top:12,
+                      //                             textStyle:{
+                      //                               color:self.titColor,
+                      //                               fontSize:self.titSize
+                      //                             },
+                      //                             subtext:self.subTit,
+                      //                             subtextStyle:{
+                      //                               color:self.subtitColor,
+                      //                               fontSize:14
+                      //                             }
+                      //                       },
+                      //                       tooltip:{
+                      //                          trigger:"axis",
+                      //                          axisPointer:{
+                      //                             type:"cross",
+                      //                             label:{
+                      //                                 backgroundColor:self.tooltipbackground
+                      //                             }
+                      //                          }
+                      //                       },
+                      //                       xAxis:{
+                      //                          show:true,
+                      //                          type:'category',
+                      //                          name:"日期",
+                      //                          nameLocation:'end',
+                      //                          nameTextStyle:{
+                      //                               color:self.axisColor,
+                      //                               fontSize:self.axisFontsize
+                      //                           },
+                      //                           axisLabel: {                    
+                      //                              show: true,                    
+                      //                              textStyle: {                        
+                      //                                color: self.axisColor,                                       
+                      //                                fontSize: self.axisFontsize
+                      //                              }                             
+                      //                           },
+                      //                           axisLine:{
+                      //                              lineStyle:{
+                      //                                   color:self.this.axisColor,
+                      //                                   width:self.axisWidthSize
+                      //                              }
+                      //                           },
+                      //                           //data:this.xAxisData
+                      //                           data:everyweekdata[j]
+
+                      //                       },
+                      //                       yAxis:{
+                      //                           show:true,
+                      //                           min:0,
+                      //                           max:self.yAxisMax,
+                      //                           name:"单位：篇",
+                      //                           nameTextStyle:{
+                      //                             color:self.axisColor,
+                      //                             fontSize:self.axisFontsize
+                      //                           },
+                      //                           axisLine:{
+                      //                             lineStyle:{
+                      //                                color:self.axisColor,
+                      //                                width:self.axisWidthSize
+                      //                             }
+
+                      //                          },
+                      //                          axisLabel: {                    
+                      //                              show: true,                    
+                      //                              textStyle: {                        
+                      //                                color: self.axisColor,                                       
+                      //                                fontSize: self.axisFontsize
+                      //                              }                             
+                      //                           }
+                      //                       },    
+                      //                       grid:self.Grid,                 
+                      //                       series:[{
+                      //                           data:mockData[j],
+                      //                           type:self.seriesType,
+                      //                           smooth:true,
+                      //                           areaStyle:{
+                      //                              color:self.series_area_color
+                      //                           },
+                      //                           lineStyle:{
+                      //                              width:self.series_area_line_size,
+                      //                              color:self.series_line_color
+                      //                           },
+                      //                           itemStyle:{
+                      //                               borderWidth:self.series_area_item_size,
+                      //                               color:self.series_item_color
+                      //                           }                                              
+                      //                       }],
+                      //                 }
+                      //                 myChart.setOption(options);   
+
+                      // },function(res){
+                      //      console.log(res.status);
+                      // });
+
+                      
+                      this.$http.get('/apply/readData').then(function(result){
+                           self.everydays=$.parseJSON(JSON.parse(res.body)).everydaynumbers;
+                                     let m5=self.everydays[4].five.d3.slice(13);
+                                     let m6=self.everydays[5].six.d3;
+                                     let m7=self.everydays[6].seven.d3;
+                                     let m8=self.everydays[7].eight.d3;
+                                     let m9=self.everydays[8].nine.d3;
+                                     let m10=self.everydays[9].ten.d3;
+                                     let m11=self.everydays[10].eleven.d3;
+                                     let m12=self.everydays[11].twelve.d3;
+                                     self.alldata = m5.concat(m6,m7,m8,m9,m10,m11,m12);  
                                      // 用对象类型将请求到的数据写入本地存储中                           
                                      let storageData={
-                                          arrLen:Math.floor(this.alldata.length / shownumber),
-                                          showData:this.alldata
+                                          arrLen:Math.floor(self.alldata.length / shownumber),
+                                          showData:self.alldata
                                      }
                                      sessionStorage.setItem("sessionstorageshowdata",JSON.stringify(storageData));
                                      //const storageDatas=JSON.parse(sessionStorage.getItem('sessionstorageshowdata'));
                  
                                      //计算当前完成任务数以及百分比
-                                     this.currentTotal = sumArr(this.alldata);
-                                     this.percentage = GetPercent(this.currentTotal, this.total);
+                                     self.currentTotal = sumArr(self.alldata);
+                                     self.percentage = GetPercent(self.currentTotal, self.total);
                                      
                                      //创建新数组用于装显示的数据段
                                      const mockData=new Array();                   
-                                     for(let i = 0,len = this.alldata.length;i<len;i += this.xAxisShowNumber){
+                                     for(let i = 0,len = self.alldata.length;i<len;i += self.xAxisShowNumber){
                                          //mockData.push(Math.floor(Math.random()*100)+200);
-                                          mockData.push(this.alldata.slice(i,i+this.xAxisShowNumber));
+                                          mockData.push(self.alldata.slice(i,i+self.xAxisShowNumber));
                                      }  
 
                                      // 获得数据段对应的时间轴
                                      let XaxisData=new Array();
-                                     const alldownyeardata=this.alldownyeartime;
-                                     let num=this.alldata.length;
+                                     const alldownyeardata=self.alldownyeartime;
+                                     let num=self.alldata.length;
                                      //console.log("来自数据库条数："+num);
                                      XaxisData=alldownyeardata.slice(0,num); 
                                      let everyweekdata=new Array();  
-                                     for(let i = 0,len = XaxisData.length;i<len;i += this.xAxisShowNumber){
-                                          everyweekdata.push(XaxisData.slice(i,i+this.xAxisShowNumber));
+                                     for(let i = 0,len = XaxisData.length;i<len;i += self.xAxisShowNumber){
+                                          everyweekdata.push(XaxisData.slice(i,i+self.xAxisShowNumber));
                                      }     
 
                                     
@@ -263,19 +408,19 @@ var vue=new Vue({
                                      // });
 
                                      const box=document.getElementById("box");
-                                     const myChart=echarts.init(box,this.customStyle);
+                                     const myChart=echarts.init(box,self.customStyle);
                                      const options={
                                             title:{
-                                                  text:this.bigTit,
+                                                  text:self.bigTit,
                                                   left:'center',
                                                   top:12,
                                                   textStyle:{
-                                                    color:this.titColor,
-                                                    fontSize:this.titSize
+                                                    color:self.titColor,
+                                                    fontSize:self.titSize
                                                   },
-                                                  subtext:this.subTit,
+                                                  subtext:self.subTit,
                                                   subtextStyle:{
-                                                    color:this.subtitColor,
+                                                    color:self.subtitColor,
                                                     fontSize:14
                                                   }
                                             },
@@ -284,7 +429,7 @@ var vue=new Vue({
                                                axisPointer:{
                                                   type:"cross",
                                                   label:{
-                                                      backgroundColor:this.tooltipbackground
+                                                      backgroundColor:self.tooltipbackground
                                                   }
                                                }
                                             },
@@ -294,20 +439,20 @@ var vue=new Vue({
                                                name:"日期",
                                                nameLocation:'end',
                                                nameTextStyle:{
-                                                    color:this.axisColor,
-                                                    fontSize:this.axisFontsize
+                                                    color:self.axisColor,
+                                                    fontSize:self.axisFontsize
                                                 },
                                                 axisLabel: {                    
                                                    show: true,                    
                                                    textStyle: {                        
-                                                     color: this.axisColor,                                       
-                                                     fontSize: this.axisFontsize
+                                                     color: self.axisColor,                                       
+                                                     fontSize: self.axisFontsize
                                                    }                             
                                                 },
                                                 axisLine:{
                                                    lineStyle:{
-                                                        color:this.this.axisColor,
-                                                        width:this.axisWidthSize
+                                                        color:self.this.axisColor,
+                                                        width:self.axisWidthSize
                                                    }
                                                 },
                                                 //data:this.xAxisData
@@ -317,49 +462,206 @@ var vue=new Vue({
                                             yAxis:{
                                                 show:true,
                                                 min:0,
-                                                max:this.yAxisMax,
+                                                max:self.yAxisMax,
                                                 name:"单位：篇",
                                                 nameTextStyle:{
-                                                  color:this.axisColor,
-                                                  fontSize:this.axisFontsize
+                                                  color:self.axisColor,
+                                                  fontSize:self.axisFontsize
                                                 },
                                                 axisLine:{
                                                   lineStyle:{
-                                                     color:this.axisColor,
-                                                     width:this.axisWidthSize
+                                                     color:self.axisColor,
+                                                     width:self.axisWidthSize
                                                   }
 
                                                },
                                                axisLabel: {                    
                                                    show: true,                    
                                                    textStyle: {                        
-                                                     color: this.axisColor,                                       
-                                                     fontSize: this.axisFontsize
+                                                     color: self.axisColor,                                       
+                                                     fontSize: self.axisFontsize
                                                    }                             
                                                 }
                                             },    
-                                            grid:this.Grid,                 
+                                            grid:self.Grid,                 
                                             series:[{
                                                 data:mockData[j],
-                                                type:this.seriesType,
+                                                type:self.seriesType,
                                                 smooth:true,
                                                 areaStyle:{
-                                                   color:this.series_area_color
+                                                   color:self.series_area_color
                                                 },
                                                 lineStyle:{
-                                                   width:this.series_area_line_size,
-                                                   color:this.series_line_color
+                                                   width:self.series_area_line_size,
+                                                   color:self.series_line_color
                                                 },
                                                 itemStyle:{
-                                                    borderWidth:this.series_area_item_size,
-                                                    color:this.series_item_color
+                                                    borderWidth:self.series_area_item_size,
+                                                    color:self.series_item_color
                                                 }                                              
                                             }],
                                       }
-                                      myChart.setOption(options);                       
+                                      myChart.setOption(options);   
+
+                      },function(res){
+                           console.log(res.status);
+                      });
+
+
+                       //用ajax请求数据
+                       // $.ajax({
+                       //          url:"/apply/readData",
+                       //          dataType:'JSON',
+                       //          type:'post',
+                       //          async:true,
+                       //          success:function(result){
+                       //               this.everydays=(JSON.parse(result)).everydaynumbers;
+                       //               let m5=this.everydays[4].five.d3.slice(13);
+                       //               let m6=this.everydays[5].six.d3;
+                       //               let m7=this.everydays[6].seven.d3;
+                       //               let m8=this.everydays[7].eight.d3;
+                       //               let m9=this.everydays[8].nine.d3;
+                       //               let m10=this.everydays[9].ten.d3;
+                       //               let m11=this.everydays[10].eleven.d3;
+                       //               let m12=this.everydays[11].twelve.d3;
+                       //               this.alldata = m5.concat(m6,m7,m8,m9,m10,m11,m12);  
+                       //               // 用对象类型将请求到的数据写入本地存储中                           
+                       //               let storageData={
+                       //                    arrLen:Math.floor(this.alldata.length / shownumber),
+                       //                    showData:this.alldata
+                       //               }
+                       //               sessionStorage.setItem("sessionstorageshowdata",JSON.stringify(storageData));
+                       //               //const storageDatas=JSON.parse(sessionStorage.getItem('sessionstorageshowdata'));
+                 
+                       //               //计算当前完成任务数以及百分比
+                       //               this.currentTotal = sumArr(this.alldata);
+                       //               this.percentage = GetPercent(this.currentTotal, this.total);
+                                     
+                       //               //创建新数组用于装显示的数据段
+                       //               const mockData=new Array();                   
+                       //               for(let i = 0,len = this.alldata.length;i<len;i += this.xAxisShowNumber){
+                       //                   //mockData.push(Math.floor(Math.random()*100)+200);
+                       //                    mockData.push(this.alldata.slice(i,i+this.xAxisShowNumber));
+                       //               }  
+
+                       //               // 获得数据段对应的时间轴
+                       //               let XaxisData=new Array();
+                       //               const alldownyeardata=this.alldownyeartime;
+                       //               let num=this.alldata.length;
+                       //               //console.log("来自数据库条数："+num);
+                       //               XaxisData=alldownyeardata.slice(0,num); 
+                       //               let everyweekdata=new Array();  
+                       //               for(let i = 0,len = XaxisData.length;i<len;i += this.xAxisShowNumber){
+                       //                    everyweekdata.push(XaxisData.slice(i,i+this.xAxisShowNumber));
+                       //               }     
+
+                                    
+                       //               // 首次请求成功后，将显示数据组的长度写入cookie中
+                       //               // nowDate = new Date();
+                       //               // nowDate.setTime(nowDate.getTime() + (24 * 60 * 60 * 1000));     //1天过期
+                       //               // $.cookie("showmovingdataslen", mockData.length, {
+                       //               //      path: '/',                //cookie的作用域
+                       //               //      expires: nowDate
+                       //               // });
+
+                       //               const box=document.getElementById("box");
+                       //               const myChart=echarts.init(box,this.customStyle);
+                       //               const options={
+                       //                      title:{
+                       //                            text:this.bigTit,
+                       //                            left:'center',
+                       //                            top:12,
+                       //                            textStyle:{
+                       //                              color:this.titColor,
+                       //                              fontSize:this.titSize
+                       //                            },
+                       //                            subtext:this.subTit,
+                       //                            subtextStyle:{
+                       //                              color:this.subtitColor,
+                       //                              fontSize:14
+                       //                            }
+                       //                      },
+                       //                      tooltip:{
+                       //                         trigger:"axis",
+                       //                         axisPointer:{
+                       //                            type:"cross",
+                       //                            label:{
+                       //                                backgroundColor:this.tooltipbackground
+                       //                            }
+                       //                         }
+                       //                      },
+                       //                      xAxis:{
+                       //                         show:true,
+                       //                         type:'category',
+                       //                         name:"日期",
+                       //                         nameLocation:'end',
+                       //                         nameTextStyle:{
+                       //                              color:this.axisColor,
+                       //                              fontSize:this.axisFontsize
+                       //                          },
+                       //                          axisLabel: {                    
+                       //                             show: true,                    
+                       //                             textStyle: {                        
+                       //                               color: this.axisColor,                                       
+                       //                               fontSize: this.axisFontsize
+                       //                             }                             
+                       //                          },
+                       //                          axisLine:{
+                       //                             lineStyle:{
+                       //                                  color:this.this.axisColor,
+                       //                                  width:this.axisWidthSize
+                       //                             }
+                       //                          },
+                       //                          //data:this.xAxisData
+                       //                          data:everyweekdata[j]
+
+                       //                      },
+                       //                      yAxis:{
+                       //                          show:true,
+                       //                          min:0,
+                       //                          max:this.yAxisMax,
+                       //                          name:"单位：篇",
+                       //                          nameTextStyle:{
+                       //                            color:this.axisColor,
+                       //                            fontSize:this.axisFontsize
+                       //                          },
+                       //                          axisLine:{
+                       //                            lineStyle:{
+                       //                               color:this.axisColor,
+                       //                               width:this.axisWidthSize
+                       //                            }
+
+                       //                         },
+                       //                         axisLabel: {                    
+                       //                             show: true,                    
+                       //                             textStyle: {                        
+                       //                               color: this.axisColor,                                       
+                       //                               fontSize: this.axisFontsize
+                       //                             }                             
+                       //                          }
+                       //                      },    
+                       //                      grid:this.Grid,                 
+                       //                      series:[{
+                       //                          data:mockData[j],
+                       //                          type:this.seriesType,
+                       //                          smooth:true,
+                       //                          areaStyle:{
+                       //                             color:this.series_area_color
+                       //                          },
+                       //                          lineStyle:{
+                       //                             width:this.series_area_line_size,
+                       //                             color:this.series_line_color
+                       //                          },
+                       //                          itemStyle:{
+                       //                              borderWidth:this.series_area_item_size,
+                       //                              color:this.series_item_color
+                       //                          }                                              
+                       //                      }],
+                       //                }
+                       //                myChart.setOption(options);                       
                                    
-                                }
-                       }); 
+                       //          }
+                       // }); 
                   } 
 
 
