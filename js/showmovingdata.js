@@ -503,8 +503,8 @@ var vue=new Vue({
                                       }
                                       myChart.setOption(options);   
 
-                      },function(res){
-                           console.log(res.status);
+                      },function(result){
+                           console.log(result.status);
                       });
 
 
