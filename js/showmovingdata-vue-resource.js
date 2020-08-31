@@ -300,7 +300,7 @@ var vue=new Vue({
                                                 },
                                                 axisLine:{
                                                    lineStyle:{
-                                                        color:self.this.axisColor,
+                                                        color:self.axisColor,
                                                         width:self.axisWidthSize
                                                    }
                                                 },
